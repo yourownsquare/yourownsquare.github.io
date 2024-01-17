@@ -1,0 +1,38 @@
+header img{
+margin: 0 auto; 
+width: 250px;
+height: 50px;   
+}
+header{
+    display: flex;
+    align-items: center;
+}
+/* .squares{
+    display: inline-block;
+}*/
+.square{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  
+    background-color: #f0f0f0;
+    flex-direction: row;
+    align-content: flex-start;
+    align-items: flex-start;
+}
+    
+
+
+
+  
+
+  .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+}
