@@ -1,30 +1,69 @@
-import { num } from "https://yourownsquare.github.io/numjs/num.js"; 
+import { num, oldnum } from "https://yourownsquare.github.io/numjs/num.js";
 
-let squarebox = document.querySelector('.new');
+let dimensions = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65];
 
-let dimensions =[5,10,15,20,25,30,35,40,45,50,55,60,65]
-function width(){ 
-let ele = Math.floor(Math.random()*dimensions.length);
-var length = dimensions[ele];
+let width = 0;
 
-return length};
+document.addEventListener("DOMContentLoaded", function () {
+  generateSquares();
+});
 
+function generateSquares() {
+  const container = document.querySelector(".new");
 
+  for (let i = 0; i < num; i++) {
+    let square = document.createElement("span");
+    square.classList.add("square");
+    width = dimensions[Math.floor(Math.random() * dimensions.length)];
+    const color = getRandomColor();
 
-let boxwidth = 0;
+    square.style.width = `${width}px`;
+    square.style.height = `${width}px`;
+    square.style.backgroundColor = color;
+
+    container.appendChild(square);
+  }
+}
+
 function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
-return color
+  return color;
 }
+// var workerloop = new Worker('js/worker.js');
+// window.onload = () =>{workerloop.postMessage(oldnum)};
+// let oldbox = document.querySelector('.old');
+// workerloop.onmessage = function(event){
 
-for(let i=0; i<num; i++){
-    boxwidth = width();
-    let color = getRandomColor();
-    squarebox.innerHTML+= '<span style="height: '+boxwidth+'px; width: '+boxwidth+'px; background-color: '+color+'; " class="squares box"></span>'
+//   oldbox.appendChild(event.data);
+//   workerloop.terminate();
 
+// };
+document.addEventListener("DOMContentLoaded", function () {
+  const worker = new Worker("js/worker.js");
+
+  worker.addEventListener("message", function (event) {
+    const squaresData = event.data;
+    displaySquares(squaresData);
+  });
+
+  worker.postMessage(oldnum);
+});
+
+function displaySquares(squaresData) {
+  const oldbox = document.querySelector(".old");
+
+  squaresData.forEach((data) => {
+    const square = document.createElement("span");
+    square.classList.add("square");
+
+    square.style.width = `${data.size}px`;
+    square.style.height = `${data.size}px`;
+    square.style.backgroundColor = data.color;
+
+    oldbox.appendChild(square);
+  });
 }
-
